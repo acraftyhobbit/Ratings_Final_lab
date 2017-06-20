@@ -71,14 +71,13 @@ def load_ratings():
 
     for row in open("seed_data/u.data"):
         row = row.rstrip()
-        user_id, movie_id, score, rating_id = row.split("\t")
+        user_id, movie_id, score, time = row.split("\t")
 
-        rating = Rating(user_id=user_id, movie_id=movie_id, score=score, rating_id=rating_id)
+        rating = Rating(user_id=user_id, movie_id=movie_id, score=score)
 
         db.session.add(rating)
 
     db.session.commit()
-
 
 
 def set_val_user_id():

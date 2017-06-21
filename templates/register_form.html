@@ -3,6 +3,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2></h2>
+<h2>Create new account</h2>
 
+  <form action= "/register" method="POST">
+    Email: <input type="text" name="email"><br>
+    Password: <input type="password" name="password"><br>
+    Age: <input type="text" name="age"><br>
+    Zipcode: <input type="text" name="zipcode"><br>
+    <input type="submit" value="Create Account">
+  </form>
+     
 {% endblock %}
+

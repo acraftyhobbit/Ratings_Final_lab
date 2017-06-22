@@ -30,18 +30,23 @@ def index():
 def user_list():
     """Show list of users."""
 
-    users = User.query.all()
+    users = User.query.order_by(User.user_id.desc())
     return render_template("user_list.html", users=users)
 
 
-@app.route("/user")
-def user_information():
-    """Show user information."""
+@app.route("/movies")
+def movie_list():
+    """Show a listing of movies."""
 
-    user_email = session['current_user']
-    db_user_info = User.query.filter_by(email=user_email).one()
+    movies = Movie.query.order_by(Movie.title)
+    return render_template("movie_list.html", movies=movies)
 
-    return render_template("user_info.html",db_user_info=db_user_info)
+@app.route("/users/<user_id>")
+def user_details(user_id):
+    """Show user details."""
+
+    user = User.query.filter_by(user_id=user_id).one()
+    return render_template("user_info.html", db_user_info=user)
 
 
 @app.route('/register', methods=["GET"])
@@ -88,15 +93,15 @@ def login_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    db_login = User.query.filter_by(email=email, password=password).all()
+    db_login = User.query.filter_by(email=email).first()
     #validate login information
-    if not db_login:
+    if not db_login or db_login.password != password:
         flash("Email or Password do not match, please try again.")
         return redirect("/login")
     else:
         session['current_user'] = email
         flash("Welcome Back {}!".format(email))
-        return redirect("/user")
+        return redirect("/users/" + str(db_login.user_id))
 
 
 @app.route('/logout')  # methods=["POST"]
@@ -120,4 +125,4 @@ if __name__ == "__main__":
 
 
 
-    # app.run(port=5000, host='0.0.0.0')
+    app.run(port=5000, host='0.0.0.0')

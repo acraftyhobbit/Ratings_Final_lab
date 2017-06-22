@@ -34,6 +34,16 @@ def user_list():
     return render_template("user_list.html", users=users)
 
 
+@app.route("/user")
+def user_information():
+    """Show user information."""
+
+    user_email = session['current_user']
+    db_user_info = User.query.filter_by(email=user_email).one()
+
+    return render_template("user_info.html",db_user_info=db_user_info)
+
+
 @app.route('/register', methods=["GET"])
 def register_form():
 
@@ -84,26 +94,17 @@ def login_process():
         flash("Email or Password do not match, please try again.")
         return redirect("/login")
     else:
-        session['current user'] = email
+        session['current_user'] = email
         flash("Welcome Back {}!".format(email))
-        return redirect("/")
+        return redirect("/user")
 
 
-@app.route('/logout') #methods=["POST"]
+@app.route('/logout')  # methods=["POST"]
 def logout_process():
 
-    del session['current user']
+    del session['current_user']
     flash("Goodbye! You have successfully logged out.")
     return redirect("/")
-
-
-@app.route('/log_route')
-def log_status():
-
-    if 'current user' in session:
-        return redirect("/logout")
-    else:
-        return redirect("/login")
 
 
 if __name__ == "__main__":
@@ -119,4 +120,4 @@ if __name__ == "__main__":
 
 
 
-    app.run(port=5000, host='0.0.0.0')
+    # app.run(port=5000, host='0.0.0.0')

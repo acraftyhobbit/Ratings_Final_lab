@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>{{ db_user_info.email }} Information</h2>
+    <ul>
+      <li>{{ db_user_info.email }}</li>
+      <li>{{ db_user_info.user_id }}</li>
+      <li>{{ db_user_info.age }}</li>
+      <li>{{ db_user_info.zipcode }}</li>
+      {% if db_user_info.ratings %}
+        <li>
+          {% for rating in db_user_info.ratings %} ########
+            <li>Movie: {{ movie......... }} Rating:{{ movie.........rating }}</li>
+          {% endfor %}      
+        </li>
+      {% endif %}
+    </ul>
+
+{% endblock %}
+
+
+
+<!-- db_user_info.ratings[1].movie.title
+ -->
+ <!-- db_user_info.ratings[1].movie.title -->

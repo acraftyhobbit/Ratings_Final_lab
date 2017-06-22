@@ -6,9 +6,17 @@
 
 <body>
   Ratings
-  <form action="/log_route">
-    <input type="submit" value ="Login/Logout">
-  </form>
+  {% if "current_user" in session %}
+    <form action="/logout">
+        <input type="submit" value="Logout">
+    </form>
+  {% else %}
+    <form action="/login">
+        <input type="submit" value="Login">
+    </form>
+  {% endif %}
+
+
   <hr>
 
   {% for message in get_flashed_messages() %}

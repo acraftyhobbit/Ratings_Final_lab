@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>{{ movie.title }}</h2>
+    {% if "current_user" in session %}
+      <h4><a href="/rate/{{ movie.movie_id }}">Rate this movie</a></h4>
+    {% endif %}
+    <ul>
+      <li>Released: {{ movie.released_at.year }}</li>
+      <li>IMDB: {{ movie.imdb_url }}</li>
+      <h4>Movie Ratings</h4>
+      {% if movie.ratings %}
+      <ul>
+          {% for rating in movie.ratings %} 
+            <li>User: {{rating.user.user_id}}   Score: {{ rating.score }}</li>
+          {% endfor %}      
+      </ul>
+      {% endif %}
+    </ul>
+
+{% endblock %}

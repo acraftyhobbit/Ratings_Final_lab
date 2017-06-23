@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2>User #{{ db_user_info.user_id }}'s Information</h2>
+    <h2>User #{{ user.user_id }}'s Information</h2>
     <ul>
-      <li>Email: {{ db_user_info.email }}</li>
-      <li>User ID: {{ db_user_info.user_id }}</li>
-      <li>Age: {{ db_user_info.age }}</li>
-      <li>Zipcode: {{ db_user_info.zipcode }}</li><br>
+      <li>Email: {{ user.email }}</li>
+      <li>User ID: {{ user.user_id }}</li>
+      <li>Age: {{ user.age }}</li>
+      <li>Zipcode: {{ user.zipcode }}</li><br>
       <h4>Movie Ratings</h4>
-      {% if db_user_info.ratings %}
+      {% if user.ratings %}
       <ul>
-          {% for rating in db_user_info.ratings %} 
+          {% for rating in user.ratings %} 
             <li>Movie: {{ rating.movie.title }} Score: {{ rating.score }}</li>
           {% endfor %}      
       </ul>

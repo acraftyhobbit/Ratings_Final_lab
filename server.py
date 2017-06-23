@@ -30,23 +30,33 @@ def index():
 def user_list():
     """Show list of users."""
 
-    users = User.query.order_by(User.user_id.desc())
+    users = User.query.order_by(User.user_id)
     return render_template("user_list.html", users=users)
 
-
-@app.route("/movies")
-def movie_list():
-    """Show a listing of movies."""
-
-    movies = Movie.query.order_by(Movie.title)
-    return render_template("movie_list.html", movies=movies)
 
 @app.route("/users/<user_id>")
 def user_details(user_id):
     """Show user details."""
 
     user = User.query.filter_by(user_id=user_id).one()
-    return render_template("user_info.html", db_user_info=user)
+    return render_template("user_info.html", user=user)
+
+
+@app.route("/movies")
+def movie_list():movie_info = Mo
+    """Show a listing of movies."""
+
+    movies = Movie.query.order_by(Movie.title)
+    return render_template("movie_list.html", movies=movies)
+
+
+@app.route("/movies/<movie_id>")
+def movie_details(movie_id):
+    """Show user details."""
+
+    movie = Movie.query.filter_by(movie_id=movie_id).one()
+    session['current_movie'] = movie_id
+    return render_template("movie_info.html", movie=movie)
 
 
 @app.route('/register', methods=["GET"])
@@ -80,6 +90,22 @@ def register_process():
         flash("This email already exists. Try again.")
         return redirect("/register")
 
+
+@app.route('/rate/<movie_id>')
+def rate_form(movie_id):
+    movie_id = session['current_movie']
+    movie = Movie.query.filter_by(movie_id=movie_id).one()
+    return render_template("rate_form.html", movie=movie)
+
+
+@app.route('/rate', methods=["POST"])
+def rate_process():
+
+    movie = session["current_movie"]
+    score = request.form.get("rating")
+    user = session["current_user"]
+    movie_info = Movie.query.filter_by(movie_id=movie_id).one()
+    pass
 
 @app.route('/login', methods=["GET"])
 def login_form():
@@ -125,4 +151,4 @@ if __name__ == "__main__":
 
 
 
-    app.run(port=5000, host='0.0.0.0')
+    # app.run(port=5000, host='0.0.0.0')
